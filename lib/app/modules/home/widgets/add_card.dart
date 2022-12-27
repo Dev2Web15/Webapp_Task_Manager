@@ -89,7 +89,7 @@ class AddCard extends StatelessWidget {
                         );
                         Get.back();
                         homeCtrl.addTask(task) ?
-                            EasyLoading.showSuccess("Create Sucess") :
+                            EasyLoading.showSuccess("Create Successful") :
                             EasyLoading.showError("Duplicate Task");
                       }
                       },
