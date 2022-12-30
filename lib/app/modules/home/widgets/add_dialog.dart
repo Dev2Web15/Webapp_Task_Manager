@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:task_manager/app/core/utils/extensions.dart';
 import 'package:task_manager/app/modules/home/controller.dart';
@@ -22,16 +23,35 @@ class AddDialog extends StatelessWidget {
                   IconButton(
                       onPressed: () {
                         Get.back();
+                        homeCtrl.editCtrl.clear();
+                        homeCtrl.changeTask(null);
                       },
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                   ),
                   TextButton(
                     style: ButtonStyle(
                       overlayColor: MaterialStateProperty.all(Colors.transparent)
                     ),
                       onPressed: (){
-
-                      },
+                      if(homeCtrl.formKey.currentState!.validate()) {
+                        if (homeCtrl.task.value == null) {
+                          EasyLoading.showError("Please select task type");
+                        } else {
+                          var success = homeCtrl.updateTask(
+                            homeCtrl.task.value!,
+                            homeCtrl.editCtrl.text,
+                          );
+                          if (success) {
+                            EasyLoading.showSuccess("Todo item add successful");
+                            Get.back();
+                            homeCtrl.changeTask(null);
+                          } else {
+                            EasyLoading.showError("Todo item already exist");
+                          }
+                          homeCtrl.editCtrl.clear();
+                        }
+                      }
+                        },
                       child: Text("Done",
                       style: TextStyle(fontSize: 14.0.sp),))
                 ],
@@ -76,7 +96,42 @@ class AddDialog extends StatelessWidget {
                 color: Colors.grey,
               ),),
             ),
-
+            ...homeCtrl.tasks.map((element) =>
+            Obx(
+                () => InkWell(
+                onTap: () => homeCtrl.changeTask(element),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: 3.0.wp,
+                      horizontal: 5.0.wp,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(IconData(element.icon,
+                            fontFamily: "MaterialIcons",),
+                              color: HexColor.fromHex(element.color)),
+                          SizedBox(
+                            width: 3.0.wp,
+                          ),
+                          Text(element.title,
+                            style: TextStyle(
+                              fontSize: 12.0.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      if(homeCtrl.task.value == element)
+                        const Icon(Icons.check, color: Colors.blue,
+                        )
+                    ],
+                  ),
+                ),
+              ),
+            )).toList()
           ],
         ),
       ),

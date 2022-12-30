@@ -1,9 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:task_manager/app/core/utils/extensions.dart';
 import 'package:task_manager/app/core/values/colors.dart';
 import 'package:task_manager/app/data/models/task.dart';
@@ -72,7 +70,7 @@ class AddCard extends StatelessWidget {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: blue,
+                      backgroundColor: blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)
                       ),
