@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:task_manager/app/core/utils/extensions.dart';
+import 'package:task_manager/app/modules/detail/widgets/doing_list.dart';
 import '../home/controller.dart';
 
 class DetailPage extends StatelessWidget {
@@ -25,7 +26,9 @@ class DetailPage extends StatelessWidget {
                   IconButton(
                       onPressed: () {
                         Get.back();
+                        homeCtrl.updateTodos();
                         homeCtrl.changeTask(null);
+                        homeCtrl.editCtrl.clear();
                       },
                       icon: Icon(Icons.arrow_back),
                   )
@@ -129,7 +132,8 @@ class DetailPage extends StatelessWidget {
                   return null;
                 },
               ),
-            )
+            ),
+            DoingList(),
           ],
         ),
       ),
