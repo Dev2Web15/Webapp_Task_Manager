@@ -11,6 +11,7 @@ class HomeController extends GetxController{
 
   final formKey = GlobalKey<FormState>();
   final editCtrl = TextEditingController();
+  final tabIndex = 0.obs;
   final chipIndex = 0.obs;
   final deleting = false.obs;
   final tasks = <Task>[].obs;
@@ -29,6 +30,10 @@ class HomeController extends GetxController{
   void onClose() {
     editCtrl.dispose();
     super.onClose();
+  }
+
+  void changeTabIndex (int index) {
+    tabIndex.value = index;
   }
 
   void changeChipIndex(int value) {
@@ -112,5 +117,34 @@ class HomeController extends GetxController{
     tasks.refresh();
   }
 
-  void doneTodo() {}
+  void doneTodo(String title) {
+    var doingTodo = {"title": title, "done": false};
+    int index = doingTodos.indexWhere((element) => mapEquals<String, dynamic>(doingTodo, element));
+    doingTodos.removeAt(index);
+    var doneTodo = {"title": title, "done": true};
+    doneTodos.add(doneTodo);
+    doingTodos.refresh();
+    doneTodos.refresh();
+  }
+
+  void deleteDoneTodo(dynamic doneTodo) {
+    int index = doneTodos.indexWhere((element) =>
+    mapEquals<String, dynamic>(doneTodo, element));
+    doneTodos.removeAt(index);
+    doneTodos.refresh();
+  }
+
+  bool isTodoEmpty(Task task) {
+    return task.todos == null || task.todos!.isEmpty;
+  }
+
+  int getDoneTodo (Task task) {
+    var res = 0;
+    for (int i = 0; i < task.todos!.length; i++) {
+      if (task.todos![i] ["done"] == true) {
+        res += 1;
+      }
+    }
+    return res;
+  }
 }

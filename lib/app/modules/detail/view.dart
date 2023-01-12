@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:task_manager/app/core/utils/extensions.dart';
 import 'package:task_manager/app/modules/detail/widgets/doing_list.dart';
+import 'package:task_manager/app/modules/detail/widgets/done_list.dart';
 import '../home/controller.dart';
 
 class DetailPage extends StatelessWidget {
@@ -123,10 +124,10 @@ class DetailPage extends StatelessWidget {
                       }
                     },
                     icon: Icon(Icons.done),
-                  ),
+                  )
                 ),
                 validator: (value) {
-                  if (value == null || value.trim().isNotEmpty) {
+                  if (value == null || value.trim().isEmpty) {
                     return "Please enter your todo item";
                   }
                   return null;
@@ -134,6 +135,7 @@ class DetailPage extends StatelessWidget {
               ),
             ),
             DoingList(),
+            DoneList(),
           ],
         ),
       ),
