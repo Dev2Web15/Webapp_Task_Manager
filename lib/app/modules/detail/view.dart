@@ -33,7 +33,7 @@ class DetailPage extends StatelessWidget {
                           homeCtrl.changeTask(null);
                           homeCtrl.editCtrl.clear();
                         },
-                        icon: Icon(Icons.arrow_back),
+                        icon: const Icon(Icons.arrow_back),
                     )
                   ],
                 ),
@@ -125,7 +125,7 @@ class DetailPage extends StatelessWidget {
                           homeCtrl.editCtrl.clear();
                         }
                       },
-                      icon: Icon(Icons.done),
+                      icon: const Icon(Icons.done),
                     )
                   ),
                   validator: (value) {
